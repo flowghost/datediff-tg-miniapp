@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Разница между датами — Telegram Mini App</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f5f6fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      padding: 32px 24px 24px 24px;
+      min-width: 320px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      color: #1976d2;
+    }
+    label {
+      display: block;
+      margin: 18px 0 6px;
+      font-weight: 500;
+    }
+    input[type="date"] {
+      font-size: 1rem;
+      padding: 8px 12px;
+      border: 1px solid #e3e7ed;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      width: 90%;
+    }
+    .result {
+      margin-top: 24px;
+      font-size: 1.05rem;
+      background: #f0f4ff;
+      padding: 18px;
+      border-radius: 14px;
+      color: #222;
+    }
+    @media (max-width: 450px) {
+      .container {
+        min-width: 0;
+        width: 98vw;
+        padding: 20px 3vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Разница между датами</h1>
+    <label for="date1">Первая дата:</label>
+    <input type="date" id="date1">
+
+    <label for="date2">Вторая дата:</label>
+    <input type="date" id="date2">
+
+    <div class="result" id="output">
+      Выберите две даты, чтобы увидеть разницу.
+    </div>
+  </div>
+  <script>
+    const date1 = document.getElementById('date1');
+    const date2 = document.getElementById('date2');
+    const output = document.getElementById('output');
+
+    function calcDiff() {
+      if (!date1.value || !date2.value) {
+        output.textContent = 'Выберите две даты, чтобы увидеть разницу.';
+        return;
+      }
+      const d1 = new Date(date1.value);
+      const d2 = new Date(date2.value);
+      let diffMs = Math.abs(d2 - d1);
+
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const diffWeeks = Math.floor(diffDays / 7);
+      // Для месяцев считаем просто как 30 дней (можно заменить на календарные месяцы)
+      const diffMonths = Math.floor(diffDays / 30);
+
+      output.innerHTML =
+        `<b>Часов:</b> ${diffHours}<br>` +
+        `<b>Дней:</b> ${diffDays}<br>` +
+        `<b>Недель:</b> ${diffWeeks}<br>` +
+        `<b>Месяцев (по 30 дней):</b> ${diffMonths}`;
+    }
+
+    date1.addEventListener('change', calcDiff);
+    date2.addEventListener('change', calcDiff);
+  </script>
+</body>
+</html>
+
